@@ -12,18 +12,19 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
+
 CREATE TABLE `tbl_public` (
   `PublicID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
-  'FirstName' varchar(20) NOT NULL,
-  'LastName' varchar(20) NOT NULL,
+  `FirstName` varchar(20) NOT NULL,
+  `LastName` varchar(20) NOT NULL,
   `DOB` DATE NOT NULL,
   `ReportCount` int,
   `Authenticated` tinyint(1),
   `RegistrationDate` DATE NOT NULL,
-  `VerificationCode` varchar(16),
+  `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
 
@@ -33,13 +34,13 @@ CREATE TABLE `tbl_councilMember` (
   `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
-  'FirstName' varchar(20) NOT NULL,
-  'LastName' varchar(20) NOT NULL,
+  `FirstName` varchar(20) NOT NULL,
+  `LastName` varchar(20) NOT NULL,
   `DOB` DATE NOT NULL,
   `RoleID` int NOT NULL,
   `Authenticated` tinyint(1),
   `RegistrationDate` DATE NOT NULL,
-  `VerificationCode` varchar(16),
+  `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
 
@@ -50,6 +51,5 @@ ALTER TABLE `tbl_councilMember`
 CREATE TABLE `tbl_Roles` (
   `RoleID` int NOT NULL PRIMARY KEY,
   `Title` varchar(20) NOT NULL,
-  `Description` varchar(200) NOT NULL,
-) ENGINE=InnoDB;
-
+  `Description` varchar(200) NOT NULL
+)ENGINE=InnoDB;
