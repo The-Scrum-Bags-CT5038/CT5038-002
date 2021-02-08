@@ -13,6 +13,7 @@
 --
 
 
+
 CREATE TABLE `tbl_public` (
   `PublicID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `Email` varchar(254) NOT NULL,
@@ -44,12 +45,11 @@ CREATE TABLE `tbl_councilMember` (
 ) ENGINE=InnoDB;
 
 
-ALTER TABLE `tbl_councilMember`
-  ADD CONSTRAINT `tbl_councilMember` FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RoleID`);
-
-
 CREATE TABLE `tbl_Roles` (
   `RoleID` int NOT NULL PRIMARY KEY,
   `Title` varchar(20) NOT NULL,
   `Description` varchar(200) NOT NULL
 )ENGINE=InnoDB;
+
+ALTER TABLE `tbl_councilMember`
+  ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RoleID`);
