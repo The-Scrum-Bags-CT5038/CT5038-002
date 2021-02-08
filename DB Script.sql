@@ -13,8 +13,8 @@
 --
 
 CREATE TABLE `tbl_public` (
-  `PublicID` int NOT NULL PRIMARY KEY,
-  `Email` varchar(20) NOT NULL,
+  `PublicID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
   'FirstName' varchar(20) NOT NULL,
@@ -29,8 +29,8 @@ CREATE TABLE `tbl_public` (
 
 
 CREATE TABLE `tbl_councilMember` (
-  `MemberID` int NOT NULL PRIMARY KEY,
-  `Email` varchar(20) NOT NULL,
+  `MemberID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
   'FirstName' varchar(20) NOT NULL,
@@ -42,4 +42,14 @@ CREATE TABLE `tbl_councilMember` (
   `VerificationCode` varchar(16),
 ) ENGINE=InnoDB;
 
+
+ALTER TABLE `tbl_councilMember`
+  ADD CONSTRAINT `tbl_councilMember` FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RolesID`);
+
+
+CREATE TABLE `tbl_Roles` (
+  `RolesID` int NOT NULL PRIMARY KEY,
+  `Title` varchar(20) NOT NULL,
+  `Description` varchar(200) NOT NULL,
+) ENGINE=InnoDB;
 
