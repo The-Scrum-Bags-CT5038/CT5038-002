@@ -44,11 +44,11 @@ CREATE TABLE `tbl_councilMember` (
 
 
 ALTER TABLE `tbl_councilMember`
-  ADD CONSTRAINT `tbl_councilMember` FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RolesID`);
+  ADD CONSTRAINT `tbl_councilMember` FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RoleID`);
 
 
 CREATE TABLE `tbl_Roles` (
-  `RolesID` int NOT NULL PRIMARY KEY,
+  `RoleID` int NOT NULL PRIMARY KEY,
   `Title` varchar(20) NOT NULL,
   `Description` varchar(200) NOT NULL,
 ) ENGINE=InnoDB;
