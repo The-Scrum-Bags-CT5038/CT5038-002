@@ -15,7 +15,7 @@
 
 
 CREATE TABLE `tbl_public` (
-  `PublicID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
@@ -24,14 +24,15 @@ CREATE TABLE `tbl_public` (
   `DOB` DATE NOT NULL,
   `ReportCount` int,
   `Authenticated` tinyint(1),
-  `RegistrationDate` DATE NOT NULL,
+  `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP,
   `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
 
 
 CREATE TABLE `tbl_councilMember` (
-  `MemberID` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `Email` varchar(254) NOT NULL,
   `Username` varchar(20) NOT NULL,
   `Password` varchar(50) NOT NULL,
@@ -40,16 +41,19 @@ CREATE TABLE `tbl_councilMember` (
   `DOB` DATE NOT NULL,
   `RoleID` int NOT NULL,
   `Authenticated` tinyint(1),
-  `RegistrationDate` DATE NOT NULL,
+  `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP,
   `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
 
 CREATE TABLE `tbl_Roles` (
-  `RoleID` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL PRIMARY KEY,
   `Title` varchar(20) NOT NULL,
-  `Description` varchar(200) NOT NULL
+  `Description` varchar(200) NOT NULL,
+  `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB;
 
 ALTER TABLE `tbl_councilMember`
-  ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`RoleID`);
+  ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`id`);
