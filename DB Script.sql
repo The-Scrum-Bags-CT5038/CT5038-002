@@ -13,6 +13,9 @@
 --
 
 
+DROP TABLE IF EXISTS `tbl_Roles`;
+DROP TABLE IF EXISTS `tbl_public`;
+DROP  TABLE IF EXISTS `tbl_councilMember`;
 
 CREATE TABLE `tbl_public` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +28,7 @@ CREATE TABLE `tbl_public` (
   `ReportCount` int,
   `Authenticated` tinyint(1),
   `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP,
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
@@ -42,7 +45,7 @@ CREATE TABLE `tbl_councilMember` (
   `RoleID` int NOT NULL,
   `Authenticated` tinyint(1),
   `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP,
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VerificationCode` varchar(16)
 ) ENGINE=InnoDB;
 
@@ -52,8 +55,9 @@ CREATE TABLE `tbl_Roles` (
   `Title` varchar(20) NOT NULL,
   `Description` varchar(200) NOT NULL,
   `CreatedAT` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMPT ON UPDATE CURRENT_TIMESTAMP
+  `UpdateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB;
 
 ALTER TABLE `tbl_councilMember`
   ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`id`);
+
