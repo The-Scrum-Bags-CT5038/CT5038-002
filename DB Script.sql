@@ -58,6 +58,68 @@ CREATE TABLE `tbl_Roles` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB;
 
+
+DROP TABLE IF EXISTS `tbl_report`;
+DROP TABLE IF EXISTS `tbl_update`;
+DROP  TABLE IF EXISTS `tbl_outcome`;
+
+CREATE TABLE `tbl_report` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `publicID` int,
+  `title` varchar(50) NOT NULL,
+  `desc` varchar(254) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', 
+  `category` varchar(50),
+  `severity` int,
+  `urgency` int,
+  `locationLat` point,
+  `locationLng` point
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `tbl_update` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `reportID` int,
+  `outcomeID` int,
+  `memberID` int,
+  `title` varchar(50) NOT NULL,
+  `desc` varchar(254) NOT NULL,
+  `progress` int,
+  `comment` varchar(254),
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', 
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `tbl_outcome` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `memberID` int,
+  `reportID` int,
+  `title` varchar(50) NOT NULL,
+  `desc` varchar(254) NOT NULL,
+  `progress` int,
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB;
+
+
+ALTER TABLE `tbl_report`
+  ADD FOREIGN KEY (`publicID`) REFERENCES `tbl_public` (`id`);
+
+ALTER TABLE `tbl_update`
+  ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
+
+ALTER TABLE `tbl_update`
+  ADD FOREIGN KEY (`outcomeID`) REFERENCES `tbl_outcome` (`id`);
+
+ALTER TABLE `tbl_update`
+  ADD FOREIGN KEY (`memberID`) REFERENCES `tbl_councilMember` (`id`);
+
+ALTER TABLE `tbl_outcome`
+  ADD FOREIGN KEY (`memberID`) REFERENCES `tbl_councilMember` (`id`);
+
+ALTER TABLE `tbl_outcome`
+  ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
+
+
 ALTER TABLE `tbl_councilMember`
   ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`id`);
 
