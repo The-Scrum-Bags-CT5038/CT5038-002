@@ -16,6 +16,9 @@
 DROP TABLE IF EXISTS `tbl_Roles`;
 DROP TABLE IF EXISTS `tbl_public`;
 DROP  TABLE IF EXISTS `tbl_councilMember`;
+DROP TABLE IF EXISTS `tbl_report`;
+DROP TABLE IF EXISTS `tbl_update`;
+DROP  TABLE IF EXISTS `tbl_outcome`;
 
 CREATE TABLE `tbl_public` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -59,10 +62,6 @@ CREATE TABLE `tbl_Roles` (
 )ENGINE=InnoDB;
 
 
-DROP TABLE IF EXISTS `tbl_report`;
-DROP TABLE IF EXISTS `tbl_update`;
-DROP  TABLE IF EXISTS `tbl_outcome`;
-
 CREATE TABLE `tbl_report` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `publicID` int,
@@ -86,7 +85,7 @@ CREATE TABLE `tbl_update` (
   `desc` varchar(254) NOT NULL,
   `progress` int,
   `comment` varchar(254),
-  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', 
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' 
 ) ENGINE=InnoDB;
 
 
@@ -118,7 +117,6 @@ ALTER TABLE `tbl_outcome`
 
 ALTER TABLE `tbl_outcome`
   ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
-
 
 ALTER TABLE `tbl_councilMember`
   ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`id`);
