@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS `tbl_Roles`;
 DROP TABLE IF EXISTS `tbl_public`;
 DROP  TABLE IF EXISTS `tbl_councilMember`;
 DROP TABLE IF EXISTS `tbl_report`;
+DROP  TABLE IF EXISTS `tbl_reportImages`;
 DROP TABLE IF EXISTS `tbl_update`;
 DROP  TABLE IF EXISTS `tbl_outcome`;
 
@@ -75,6 +76,10 @@ CREATE TABLE `tbl_report` (
   `locationLng` point
 ) ENGINE=InnoDB;
 
+CREATE TABLE `tbl_reportImages` (
+  `id` int PRIMARY KEY,
+  `imageID` varchar(30)
+) ENGINE=InnoDB;
 
 CREATE TABLE `tbl_update` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -100,8 +105,12 @@ CREATE TABLE `tbl_outcome` (
 ) ENGINE=InnoDB;
 
 
+
 ALTER TABLE `tbl_report`
   ADD FOREIGN KEY (`publicID`) REFERENCES `tbl_public` (`id`);
+  
+ALTER TABLE `tbl_reportImages`
+  ADD FOREIGN KEY (`id`) REFERENCES `tbl_report` (`id`);
 
 ALTER TABLE `tbl_update`
   ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
