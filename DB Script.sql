@@ -12,14 +12,16 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
-
-DROP TABLE IF EXISTS `tbl_Roles`;
+DROP TABLE IF EXISTS `tbl_categories`
+DROP TABLE IF EXISTS `tbl_roles`;
 DROP TABLE IF EXISTS `tbl_public`;
 DROP  TABLE IF EXISTS `tbl_councilMember`;
 DROP TABLE IF EXISTS `tbl_report`;
 DROP  TABLE IF EXISTS `tbl_reportImages`;
 DROP TABLE IF EXISTS `tbl_update`;
 DROP  TABLE IF EXISTS `tbl_outcome`;
+
+--Tables concering accounts
 
 CREATE TABLE `tbl_public` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +56,7 @@ CREATE TABLE `tbl_councilMember` (
 ) ENGINE=InnoDB;
 
 
-CREATE TABLE `tbl_Roles` (
+CREATE TABLE `tbl_roles` (
   `id` int NOT NULL PRIMARY KEY,
   `title` varchar(20) NOT NULL,
   `description` varchar(200) NOT NULL,
@@ -63,18 +65,28 @@ CREATE TABLE `tbl_Roles` (
 )ENGINE=InnoDB;
 
 
+--Tables concerning incident reports
+
 CREATE TABLE `tbl_report` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `publicID` int,
   `title` varchar(50) NOT NULL,
   `desc` varchar(254) NOT NULL,
   `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', 
-  `category` varchar(50),
+  `categoryID` int,
   `severity` int,
   `urgency` int,
   `locationLat` point,
   `locationLng` point
 ) ENGINE=InnoDB;
+
+CREATE TABLE `tbl_categories` (
+  `id` int NOT NULL PRIMARY KEY,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(200),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB;
 
 CREATE TABLE `tbl_reportImages` (
   `id` int PRIMARY KEY,
@@ -105,9 +117,13 @@ CREATE TABLE `tbl_outcome` (
 ) ENGINE=InnoDB;
 
 
+-- Foreign Keys
 
 ALTER TABLE `tbl_report`
   ADD FOREIGN KEY (`publicID`) REFERENCES `tbl_public` (`id`);
+  
+ ALTER TABLE `tbl_report`
+  ADD FOREIGN KEY (`categoryID`) REFERENCES `tbl_categories` (`id`);
   
 ALTER TABLE `tbl_reportImages`
   ADD FOREIGN KEY (`id`) REFERENCES `tbl_report` (`id`);
@@ -128,5 +144,15 @@ ALTER TABLE `tbl_outcome`
   ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
 
 ALTER TABLE `tbl_councilMember`
-  ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_Roles` (`id`);
+  ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_roles` (`id`);
+
+
+-- Sample data
+
+INSERT INTO tbl_categories
+VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view');
+
+INSERT INTO tbl_categories
+VALUES ('Pothole', 'Depression in a road surface');
+
 
