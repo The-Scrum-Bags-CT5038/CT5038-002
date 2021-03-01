@@ -57,7 +57,7 @@ CREATE TABLE `tbl_councilMember` (
 
 
 CREATE TABLE `tbl_roles` (
-  `id` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(20) NOT NULL,
   `description` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -81,7 +81,7 @@ CREATE TABLE `tbl_report` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tbl_categories` (
-  `id` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(50) NOT NULL,
   `description` varchar(200),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -149,10 +149,14 @@ ALTER TABLE `tbl_councilMember`
 
 -- Sample data
 
-INSERT INTO tbl_categories
+INSERT INTO tbl_categories (title, description)
 VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view');
 
-INSERT INTO tbl_categories
+INSERT INTO tbl_categories (title, description)
 VALUES ('Pothole', 'Depression in a road surface');
+
+
+INSERT INTO tbl_categories (title, description)
+VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry');
 
 
