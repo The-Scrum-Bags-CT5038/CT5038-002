@@ -12,12 +12,12 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
+DROP  TABLE IF EXISTS `tbl_councilMember`;
+DROP  TABLE IF EXISTS `tbl_reportImages`;
+DROP TABLE IF EXISTS `tbl_report`;
+DROP TABLE IF EXISTS `tbl_public`;
 DROP TABLE IF EXISTS `tbl_categories`
 DROP TABLE IF EXISTS `tbl_roles`;
-DROP TABLE IF EXISTS `tbl_public`;
-DROP  TABLE IF EXISTS `tbl_councilMember`;
-DROP TABLE IF EXISTS `tbl_report`;
-DROP  TABLE IF EXISTS `tbl_reportImages`;
 DROP TABLE IF EXISTS `tbl_update`;
 DROP  TABLE IF EXISTS `tbl_outcome`;
 
@@ -77,7 +77,7 @@ CREATE TABLE `tbl_report` (
   `urgency` int,
   `locationLat` point,
   `locationLng` point,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
