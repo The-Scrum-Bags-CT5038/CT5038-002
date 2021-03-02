@@ -11,17 +11,18 @@
 -- DB FOR ROLES NEEDS SOME WORK ON. IT IS LINKED TO THE REPORT DB IN ERD
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
-
-DROP  TABLE IF EXISTS `tbl_councilMember`;
 DROP  TABLE IF EXISTS `tbl_reportImages`;
-DROP TABLE IF EXISTS `tbl_report`;
-DROP TABLE IF EXISTS `tbl_public`;
-DROP TABLE IF EXISTS `tbl_categories`
-DROP TABLE IF EXISTS `tbl_roles`;
 DROP TABLE IF EXISTS `tbl_update`;
 DROP  TABLE IF EXISTS `tbl_outcome`;
+DROP  TABLE IF EXISTS `tbl_councilMember`;
+DROP TABLE IF EXISTS `tbl_report`;
+DROP TABLE IF EXISTS `tbl_public`;
+DROP TABLE IF EXISTS `tbl_categories`;
+DROP TABLE IF EXISTS `tbl_roles`;
 
---Tables concering accounts
+
+
+-- Tables concering accounts
 
 CREATE TABLE `tbl_public` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -65,13 +66,13 @@ CREATE TABLE `tbl_roles` (
 )ENGINE=InnoDB;
 
 
---Tables concerning incident reports
+-- Tables concerning incident reports
 
 CREATE TABLE `tbl_report` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `publicID` int,
   `title` varchar(50) NOT NULL,
-  `desc` varchar(254) NOT NULL
+  `desc` varchar(254) NOT NULL,
   `categoryID` int,
   `severity` int,
   `urgency` int,
