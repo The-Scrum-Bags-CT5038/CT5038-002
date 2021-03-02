@@ -160,3 +160,14 @@ INSERT INTO tbl_categories (title, description)
 VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry');
 
 
+-- Roles data
+
+INSERT INTO tbl_Roles (id, title, description)
+VALUES ('1', 'Public', 'A member of the public looking to view and report issues');
+
+INSERT INTO tbl_Roles (id, title, description)
+VALUES ('2', 'Council', 'An employee of the council');
+
+INSERT INTO tbl_Roles (id, title, description)
+VALUES ('3', 'Admin', 'Administrator role');
+
