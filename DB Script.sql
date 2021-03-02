@@ -71,13 +71,14 @@ CREATE TABLE `tbl_report` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `publicID` int,
   `title` varchar(50) NOT NULL,
-  `desc` varchar(254) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', 
+  `desc` varchar(254) NOT NULL
   `categoryID` int,
   `severity` int,
   `urgency` int,
   `locationLat` point,
-  `locationLng` point
+  `locationLng` point,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tbl_categories` (
@@ -90,7 +91,9 @@ CREATE TABLE `tbl_categories` (
 
 CREATE TABLE `tbl_reportImages` (
   `id` int PRIMARY KEY,
-  `imageID` varchar(30)
+  `imageID` varchar(30),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tbl_update` (
@@ -162,12 +165,12 @@ VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry')
 
 -- Roles data
 
-INSERT INTO tbl_Roles (id, title, description)
+INSERT INTO tbl_roles (id, title, description)
 VALUES ('1', 'Public', 'A member of the public looking to view and report issues');
 
-INSERT INTO tbl_Roles (id, title, description)
+INSERT INTO tbl_roles (id, title, description)
 VALUES ('2', 'Council', 'An employee of the council');
 
-INSERT INTO tbl_Roles (id, title, description)
+INSERT INTO tbl_roles (id, title, description)
 VALUES ('3', 'Admin', 'Administrator role');
 
