@@ -13,6 +13,7 @@
 --
 
 DROP VIEW IF EXISTS `view_report_categories`
+DROP VIEW IF EXISTS `view_my_reports`
 
 DROP  TABLE IF EXISTS `tbl_reportImages`;
 DROP TABLE IF EXISTS `tbl_update`;
@@ -109,7 +110,7 @@ CREATE TABLE `tbl_update` (
   `desc` varchar(254) NOT NULL,
   `progress` int,
   `comment` varchar(254),
-  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' 
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB;
 
 
@@ -128,10 +129,10 @@ CREATE TABLE `tbl_outcome` (
 
 ALTER TABLE `tbl_report`
   ADD FOREIGN KEY (`publicID`) REFERENCES `tbl_public` (`id`);
-  
+
  ALTER TABLE `tbl_report`
   ADD FOREIGN KEY (`categoryID`) REFERENCES `tbl_categories` (`id`);
-  
+
 ALTER TABLE `tbl_reportImages`
   ADD FOREIGN KEY (`id`) REFERENCES `tbl_report` (`id`);
 
@@ -152,18 +153,29 @@ ALTER TABLE `tbl_outcome`
 
 ALTER TABLE `tbl_councilMember`
   ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_roles` (`id`);
-  
-  
+
+
 -- View build
 
-CREATE OR REPLACE VIEW view_report_categories (id, category, title, description, severity, urgency, created_at) AS 
+CREATE OR REPLACE VIEW view_report_categories (id, category, title, description, severity, urgency, created_at) AS
   SELECT tbl_report.id, tbl_categories.title, tbl_report.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.created_at
-    
+
 FROM tbl_report
 LEFT JOIN tbl_categories
 ON tbl_report.categoryID = tbl_categories.id
 GROUP BY tbl_report.id, tbl_report.title;
 
+
+-- view build
+-- builds view_my_reports
+
+CREATE OR REPLACE VIEW view_my_reports (reportID, updateID, title, progress, created_at) AS
+SELECT tbl_report.id, tbl_update.id, tbl_report.title, tbl_update.progress, tbl_report.created_at
+
+FROM tbl_report
+LEFT JOIN tbl_update
+ON tbl_report.id = tbl_update.reportID
+GROUP BY tbl_report.id, tbl_report.title
 
 -- Sample data
 
@@ -188,4 +200,3 @@ VALUES ('2', 'Council', 'An employee of the council');
 
 INSERT INTO tbl_roles (id, title, description)
 VALUES ('3', 'Admin', 'Administrator role');
-
