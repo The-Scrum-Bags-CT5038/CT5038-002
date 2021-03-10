@@ -175,7 +175,7 @@ SELECT tbl_report.id, tbl_update.id, tbl_report.title, tbl_update.progress, tbl_
 FROM tbl_report
 LEFT JOIN tbl_update
 ON tbl_report.id = tbl_update.reportID
-GROUP BY tbl_report.id, tbl_report.title
+
 
 -- Sample data
 
