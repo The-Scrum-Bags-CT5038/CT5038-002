@@ -121,7 +121,8 @@ CREATE TABLE `tbl_outcome` (
   `title` varchar(50) NOT NULL,
   `desc` varchar(254) NOT NULL,
   `progress` int,
-  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 
@@ -200,3 +201,38 @@ VALUES ('2', 'Council', 'An employee of the council');
 
 INSERT INTO tbl_roles (id, title, description)
 VALUES ('3', 'Admin', 'Administrator role');
+
+
+-- Triggers
+
+DROP TRIGGER IF EXISTS trigger_outcome_log;
+DELIMITER //
+create trigger trigger_outcome_log 
+AFTER INSERT
+ON `tbl_outcome`
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO tbl_update (`reportID`, `outcomeID`, `title`, `desc`, `progress`, `date`) 
+    VALUES (NEW.reportID, NEW.id, NEW.title, NEW.desc, NEW.progress, NEW.created_at);
+
+
+END; //
+
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS trigger_outcome_update_log;
+DELIMITER //
+create trigger trigger_outcome_update_log 
+AFTER UPDATE
+ON `tbl_outcome`
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO tbl_update (`reportID`, `outcomeID`, `title`, `desc`, `progress`, `date`) 
+    VALUES (NEW.reportID, NEW.id, NEW.title, NEW.desc, NEW.progress, NEW.updated_at);
+
+
+END; //
+
+DELIMITER ;
