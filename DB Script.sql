@@ -15,6 +15,7 @@
 DROP VIEW IF EXISTS `view_report_categories`
 DROP VIEW IF EXISTS `view_my_reports`
 
+DROP TABLE IF EXISTS `tbl_outcomeImages`;
 DROP  TABLE IF EXISTS `tbl_reportImages`;
 DROP TABLE IF EXISTS `tbl_update`;
 DROP  TABLE IF EXISTS `tbl_outcome`;
@@ -125,6 +126,14 @@ CREATE TABLE `tbl_outcome` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+CREATE TABLE `tbl_outcomeImages` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `outcomeID` int,
+  `imageName` varchar(50),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 
 -- Foreign Keys
 
@@ -154,6 +163,9 @@ ALTER TABLE `tbl_outcome`
 
 ALTER TABLE `tbl_councilMember`
   ADD FOREIGN KEY (`RoleID`) REFERENCES `tbl_roles` (`id`);
+  
+ALTER TABLE `tbl_outcomeImages`
+  ADD FOREIGN KEY (`outcomeID`) REFERENCES `tbl_outcome` (`id`);
 
 
 -- View build
