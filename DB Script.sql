@@ -172,7 +172,7 @@ ALTER TABLE `tbl_outcomeImages`
 -- View build
 
 CREATE OR REPLACE VIEW view_report_categories (id, category, title, description, severity, urgency, locationLat, locationLng, created_at, imageID, imageName) AS
-  SELECT tbl_report.id, tbl_categories.title, tbl_report.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID
+  SELECT tbl_report.id, tbl_categories.title, tbl_report.title, tbl_report.desc, tbl_categories.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID
 
 FROM tbl_report
 LEFT JOIN tbl_categories
