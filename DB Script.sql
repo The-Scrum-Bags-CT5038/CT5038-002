@@ -91,6 +91,7 @@ CREATE TABLE `tbl_categories` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(50) NOT NULL,
   `description` varchar(200),
+  `severity` int,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB;
@@ -195,14 +196,14 @@ ON tbl_report.id = tbl_update.reportID
 -- Sample data
 
 INSERT INTO tbl_categories (title, description)
-VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view');
+VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view', '1');
 
 INSERT INTO tbl_categories (title, description)
-VALUES ('Pothole', 'Depression in a road surface');
+VALUES ('Pothole', 'Depression in a road surface', '1');
 
 
 INSERT INTO tbl_categories (title, description)
-VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry');
+VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry', '3');
 
 
 -- Roles data
