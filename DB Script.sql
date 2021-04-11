@@ -12,6 +12,7 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
+DROP VIEW IF EXISTS `view_incident_reports_month`
 DROP VIEW IF EXISTS `view_report_categories`
 DROP VIEW IF EXISTS `view_my_reports`
 
@@ -32,7 +33,6 @@ DROP TABLE IF EXISTS `tbl_roles`;
 CREATE TABLE `tbl_public` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(254) NOT NULL,
-  `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
@@ -41,7 +41,8 @@ CREATE TABLE `tbl_public` (
   `authenticated` tinyint(1),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `verificationCode` varchar(16)
+  `verificationCode` varchar(16),
+  `remember_token` varchar(100)
 ) ENGINE=InnoDB;
 
 
@@ -49,7 +50,6 @@ CREATE TABLE `tbl_public` (
 CREATE TABLE `tbl_councilMember` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(254) NOT NULL,
-  `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
@@ -58,7 +58,8 @@ CREATE TABLE `tbl_councilMember` (
   `authenticated` tinyint(1),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `verificationCode` varchar(16)
+  `verificationCode` varchar(16),
+  `remember_token` varchar(100)
 ) ENGINE=InnoDB;
 
 
@@ -76,15 +77,15 @@ CREATE TABLE `tbl_roles` (
 CREATE TABLE `tbl_report` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `publicID` int,
-  `title` varchar(50) NOT NULL,
   `desc` varchar(254) NOT NULL,
   `categoryID` int,
   `severity` int,
   `urgency` int,
-  `locationLat` point,
-  `locationLng` point,
+  `locationLat` varchar(50),
+  `locationLng` varchar(50),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `likes` int DEFAULT '0'
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tbl_categories` (
@@ -191,6 +192,15 @@ SELECT tbl_report.id, tbl_update.id, tbl_report.title, tbl_update.progress, tbl_
 FROM tbl_report
 LEFT JOIN tbl_update
 ON tbl_report.id = tbl_update.reportID
+
+
+-- builds views that shows incident reports by month
+
+CREATE OR REPLACE VIEW view_incident_reports_month (incidentDate, dateCount) AS 
+  SELECT EXTRACT(YEAR_MONTH from tbl_report.created_at),
+    count(EXTRACT(YEAR_MONTH from tbl_report.created_at))
+ from tbl_report
+ GROUP BY EXTRACT(YEAR_MONTH from tbl_report.created_at)
 
 
 -- Sample data
