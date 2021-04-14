@@ -12,6 +12,7 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
+DROP VIEW IF EXISTS `view_incident_reports_categories_count`
 DROP VIEW IF EXISTS `view_incident_reports_month`
 DROP VIEW IF EXISTS `view_report_categories`
 DROP VIEW IF EXISTS `view_my_reports`
@@ -201,6 +202,15 @@ CREATE OR REPLACE VIEW view_incident_reports_month (incidentDate, dateCount) AS
     count(EXTRACT(YEAR_MONTH from tbl_report.created_at))
  from tbl_report
  GROUP BY EXTRACT(YEAR_MONTH from tbl_report.created_at)
+                  
+                  
+-- builds view that shows incident reports by category
+ CREATE OR REPLACE VIEW view_incident_reports_categories_count (incidentCategoryID, incidentCategory, categoryCount) AS
+  SELECT tbl_report.categoryID, tbl_categories.title, count(tbl_report.categoryID)
+  FROM tbl_report
+  LEFT JOIN tbl_categories
+    ON tbl_report.categoryID = tbl_categories.id
+  GROUP BY categoryID, tbl_categories.title
 
 
 -- Sample data
