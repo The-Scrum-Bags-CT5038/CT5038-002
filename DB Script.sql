@@ -37,6 +37,7 @@ CREATE TABLE `tbl_public` (
   `password` varchar(100) NOT NULL,
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
+  `postcode` varchar(10) NOT NULL,
   `dob` DATE,
   `reportCount` int(11),
   `authenticated` tinyint(1),
