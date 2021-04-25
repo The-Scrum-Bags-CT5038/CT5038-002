@@ -12,10 +12,11 @@
 -- SHOULD THIS BE CONNECTED TO COUNCIL MEMBERS INSTEAD?
 --
 
-DROP VIEW IF EXISTS `view_incident_reports_categories_count`
-DROP VIEW IF EXISTS `view_incident_reports_month`
-DROP VIEW IF EXISTS `view_report_categories`
-DROP VIEW IF EXISTS `view_my_reports`
+DROP VIEW IF EXISTS `view_council_role`;
+DROP VIEW IF EXISTS `view_incident_reports_categories_count`;
+DROP VIEW IF EXISTS `view_incident_reports_month`;
+DROP VIEW IF EXISTS `view_report_categories`;
+DROP VIEW IF EXISTS `view_my_reports`;
 
 DROP TABLE IF EXISTS `tbl_outcomeImages`;
 DROP  TABLE IF EXISTS `tbl_reportImages`;
@@ -213,6 +214,17 @@ CREATE OR REPLACE VIEW view_incident_reports_month (incidentDate, dateCount) AS
   LEFT JOIN tbl_categories
     ON tbl_report.categoryID = tbl_categories.id
   GROUP BY categoryID, tbl_categories.title
+                 
+-- builds view that shows role title alongside council memeber details  
+                  
+CREATE OR REPLACE VIEW view_council_role (id, email, firstName, lastName, dob, roleName) AS
+  SELECT tbl_councilMember.id, tbl_councilMember.email, tbl_councilMember.firstName, tbl_councilMember.lastName, tbl_councilMember.dob, tbl_roles.title
+
+FROM tbl_councilMember
+LEFT JOIN tbl_roles
+ON tbl_councilMember.RoleID = tbl_roles.id
+GROUP BY tbl_councilMember.id,tbl_roles.title, tbl_councilMember.email, tbl_councilMember.firstName, tbl_councilMember.lastName, tbl_councilMember.dob;
+
 
 
 -- Sample data
