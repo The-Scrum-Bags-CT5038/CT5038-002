@@ -250,8 +250,19 @@ VALUES ('2', 'Council', 'An employee of the council');
 
 INSERT INTO tbl_roles (id, title, description)
 VALUES ('3', 'Admin', 'Administrator role');
+                  
+                  
+-- sample data - public user
+                  
+INSERT INTO tbl_public(id, email, password, firstName, lastName, postcode)
+VALUES ('1', 'johnsmith@gmail.com', 'abc123', 'John', 'Smith', 'GL50 9FQ')
 
-
+-- sample data - council member
+                  
+INSERT INTO tbl_councilMember(id, email, password, firstName, lastName, roleID)
+VALUES ('1', 'council@gmail.com', 'abc123', 'John', 'Smith', '2')
+                  
+                  
 -- Triggers
 
 DROP TRIGGER IF EXISTS trigger_outcome_log;
