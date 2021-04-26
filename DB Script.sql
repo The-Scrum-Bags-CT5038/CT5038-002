@@ -190,12 +190,14 @@ GROUP BY tbl_report.id,tbl_categories.title, tbl_report.desc, tbl_report.severit
 -- view build
 -- builds view_my_reports
 
-CREATE OR REPLACE VIEW view_my_reports (reportID, publicID, updateID, progress, created_at) AS
-SELECT tbl_report.id, tbl_report.publicID, tbl_update.id, tbl_update.progress, tbl_report.created_at
+CREATE OR REPLACE VIEW view_my_reports (reportID, publicID,categoryID, categoryTitle, progress, created_at) AS
+SELECT tbl_report.id, tbl_report.publicID, tbl_categories.id, tbl_categories.title, tbl_update.progress, tbl_report.created_at
 
 FROM tbl_report
 LEFT JOIN tbl_update
-ON tbl_report.id = tbl_update.reportID;
+ON tbl_report.id = tbl_update.reportID
+LEFT JOIN tbl_categories
+ON tbl_report.categoryID = tbl_categories.id;
 
 
 -- builds views that shows incident reports by month
