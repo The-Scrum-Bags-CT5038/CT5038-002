@@ -103,6 +103,7 @@ CREATE TABLE `tbl_categories` (
 
 CREATE TABLE `tbl_reportImages` (
   `id` int AUTO_INCREMENT PRIMARY KEY,
+  `reportID` int,
   `imageID` varchar(30),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -150,7 +151,7 @@ ALTER TABLE `tbl_report`
   ADD FOREIGN KEY (`categoryID`) REFERENCES `tbl_categories` (`id`);
 
 ALTER TABLE `tbl_reportImages`
-  ADD FOREIGN KEY (`id`) REFERENCES `tbl_report` (`id`);
+  ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
 
 ALTER TABLE `tbl_update`
   ADD FOREIGN KEY (`reportID`) REFERENCES `tbl_report` (`id`);
