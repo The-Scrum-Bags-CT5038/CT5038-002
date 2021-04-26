@@ -102,7 +102,7 @@ CREATE TABLE `tbl_categories` (
 )ENGINE=InnoDB;
 
 CREATE TABLE `tbl_reportImages` (
-  `id` int PRIMARY KEY,
+  `id` int AUTO_INCREMENT PRIMARY KEY,
   `imageID` varchar(30),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
