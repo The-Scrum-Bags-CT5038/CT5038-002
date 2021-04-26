@@ -263,7 +263,7 @@ INSERT INTO tbl_councilMember(id, email, password, firstName, lastName, roleID)
 VALUES ('1', 'council@gmail.com', 'abc123', 'John', 'Smith', '2')
                   
 INSERT INTO tbl_councilMember(id, email, password, firstName, lastName, roleID)
-VALUES ('2', 'admin@gmail.com', 'abc123', 'Liam', 'Keanrs', '3')
+VALUES ('2', 'admin@gmail.com', 'abc123', 'Liam', 'Kearns', '3')
                   
 -- Triggers
 
