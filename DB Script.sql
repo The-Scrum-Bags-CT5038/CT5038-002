@@ -176,26 +176,26 @@ ALTER TABLE `tbl_outcomeImages`
 
 -- View build
 
-CREATE OR REPLACE VIEW view_report_categories (id, category, title, description, severity, urgency, locationLat, locationLng, created_at, imageID, imageName) AS
-  SELECT tbl_report.id, tbl_categories.title, tbl_report.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID
+CREATE OR REPLACE VIEW view_report_categories (id, category, description, severity, urgency, locationLat, locationLng, created_at, imageID, imageName) AS
+  SELECT tbl_report.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID
 
 FROM tbl_report
 LEFT JOIN tbl_categories
 ON tbl_report.categoryID = tbl_categories.id
 LEFT JOIN tbl_reportImages
 ON tbl_report.id = tbl_reportImages.id
-GROUP BY tbl_report.id,tbl_categories.title, tbl_report.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID;
+GROUP BY tbl_report.id,tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID;
 
 
 -- view build
 -- builds view_my_reports
 
-CREATE OR REPLACE VIEW view_my_reports (reportID, updateID, title, progress, created_at) AS
-SELECT tbl_report.id, tbl_update.id, tbl_report.title, tbl_update.progress, tbl_report.created_at
+CREATE OR REPLACE VIEW view_my_reports (reportID, updateID, progress, created_at) AS
+SELECT tbl_report.id, tbl_update.id, tbl_update.progress, tbl_report.created_at
 
 FROM tbl_report
 LEFT JOIN tbl_update
-ON tbl_report.id = tbl_update.reportID
+ON tbl_report.id = tbl_update.reportID;
 
 
 -- builds views that shows incident reports by month
@@ -204,7 +204,7 @@ CREATE OR REPLACE VIEW view_incident_reports_month (incidentDate, dateCount) AS
   SELECT EXTRACT(YEAR_MONTH from tbl_report.created_at),
     count(EXTRACT(YEAR_MONTH from tbl_report.created_at))
  from tbl_report
- GROUP BY EXTRACT(YEAR_MONTH from tbl_report.created_at)
+ GROUP BY EXTRACT(YEAR_MONTH from tbl_report.created_at);
                   
                   
 -- builds view that shows incident reports by category
@@ -213,7 +213,7 @@ CREATE OR REPLACE VIEW view_incident_reports_month (incidentDate, dateCount) AS
   FROM tbl_report
   LEFT JOIN tbl_categories
     ON tbl_report.categoryID = tbl_categories.id
-  GROUP BY categoryID, tbl_categories.title
+  GROUP BY categoryID, tbl_categories.title;
                  
 -- builds view that shows role title alongside council memeber details  
                   
@@ -229,15 +229,15 @@ GROUP BY tbl_councilMember.id,tbl_roles.title, tbl_councilMember.email, tbl_coun
 
 -- Sample data
 
-INSERT INTO tbl_categories (title, description)
-VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view', '1');
+INSERT INTO tbl_categories (title, description, severity, urgency)
+VALUES ('Graffiti', 'Writing or drawings on a wall or other surface in public view', '1', '1');
 
-INSERT INTO tbl_categories (title, description)
-VALUES ('Pothole', 'Depression in a road surface', '1');
+INSERT INTO tbl_categories (title, description, severity, urgency)
+VALUES ('Pothole', 'Depression in a road surface', '1', '3');
 
 
-INSERT INTO tbl_categories (title, description)
-VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry', '3');
+INSERT INTO tbl_categories (title, description, severity, urgency)
+VALUES ('Flooding', 'Overflow of water that submerges land that is usually dry', '3', '5');
 
 
 -- Roles data
@@ -255,15 +255,15 @@ VALUES ('3', 'Admin', 'Administrator role');
 -- sample data - public user
                   
 INSERT INTO tbl_public(id, email, password, firstName, lastName, postcode)
-VALUES ('1', 'johnsmith@gmail.com', 'abc123', 'John', 'Smith', 'GL50 9FQ')
+VALUES ('1', 'johnsmith@gmail.com', 'abc123', 'John', 'Smith', 'GL50 9FQ');
 
 -- sample data - council member
                   
 INSERT INTO tbl_councilMember(id, email, password, firstName, lastName, roleID)
-VALUES ('1', 'council@gmail.com', 'abc123', 'John', 'Smith', '2')
+VALUES ('1', 'council@gmail.com', 'abc123', 'John', 'Smith', '2');
                   
 INSERT INTO tbl_councilMember(id, email, password, firstName, lastName, roleID)
-VALUES ('2', 'admin@gmail.com', 'abc123', 'Liam', 'Kearns', '3')
+VALUES ('2', 'admin@gmail.com', 'abc123', 'Liam', 'Kearns', '3');
                   
 -- Triggers
 
