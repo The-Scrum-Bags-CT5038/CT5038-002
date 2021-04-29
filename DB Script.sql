@@ -88,6 +88,7 @@ CREATE TABLE `tbl_report` (
   `locationLng` varchar(50),
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `expected_outcome_date` date NULL,
   `likes` int DEFAULT '0'
 ) ENGINE=InnoDB;
 
@@ -177,15 +178,19 @@ ALTER TABLE `tbl_outcomeImages`
 
 -- View build
 
-CREATE OR REPLACE VIEW view_report_categories (id, category, description, severity, urgency, locationLat, locationLng, created_at, imageID, imageName) AS
-  SELECT tbl_report.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID
+CREATE OR REPLACE VIEW view_report_categories (id, category, description, severity, urgency, progress, locationLat, locationLng, created_at, updated_at, imageID, imageName) AS
+  SELECT tbl_report.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_outcome.progress,
+  tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_outcome.updated_at, tbl_reportImages.id, tbl_reportImages.imageID
 
 FROM tbl_report
 LEFT JOIN tbl_categories
 ON tbl_report.categoryID = tbl_categories.id
 LEFT JOIN tbl_reportImages
 ON tbl_report.id = tbl_reportImages.id
-GROUP BY tbl_report.id,tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_reportImages.id, tbl_reportImages.imageID;
+LEFT JOIN tbl_outcome
+ON tbl_report.id = tbl_outcome.reportID
+GROUP BY tbl_report.id,tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_outcome.progress,
+tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_outcome.updated_at, tbl_reportImages.id, tbl_reportImages.imageID;
 
 
 -- view build
