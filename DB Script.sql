@@ -178,8 +178,8 @@ ALTER TABLE `tbl_outcomeImages`
 
 -- View build
 
-CREATE OR REPLACE VIEW view_report_categories (id, category, description, severity, urgency, progress, locationLat, locationLng, created_at, updated_at, expected_outcome_date, imageID, imageName) AS
-  SELECT tbl_report.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_outcome.progress,
+CREATE OR REPLACE VIEW view_report_categories (id, publicID, outcomeID, category, description, severity, urgency, likes, progress, locationLat, locationLng, created_at, updated_at, expected_outcome_date, imageID, imageName) AS
+  SELECT tbl_report.id, tbl_report.publicID, tbl_outcome.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.likes, tbl_outcome.progress,
   tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_outcome.updated_at, tbl_report.expected_outcome_date, tbl_reportImages.id, tbl_reportImages.imageID
 
 FROM tbl_report
@@ -189,15 +189,15 @@ LEFT JOIN tbl_reportImages
 ON tbl_report.id = tbl_reportImages.id
 LEFT JOIN tbl_outcome
 ON tbl_report.id = tbl_outcome.reportID
-GROUP BY tbl_report.id,tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_outcome.progress,
+GROUP BY tbl_report.id, tbl_report.publicID, tbl_outcome.id, tbl_categories.title, tbl_report.desc, tbl_report.severity, tbl_report.urgency, tbl_report.likes, tbl_outcome.progress,
 tbl_report.locationLng, tbl_report.locationLat, tbl_report.created_at, tbl_outcome.updated_at, tbl_report.expected_outcome_date, tbl_reportImages.id, tbl_reportImages.imageID;
 
 
 -- view build
 -- builds view_my_reports
 
-CREATE OR REPLACE VIEW view_my_reports (reportID, publicID,categoryID, categoryTitle, progress, created_at) AS
-SELECT tbl_report.id, tbl_report.publicID, tbl_categories.id, tbl_categories.title, tbl_update.progress, tbl_report.created_at
+CREATE OR REPLACE VIEW view_my_reports (reportID, publicID,categoryID, categoryTitle, progress, created_at, expected_outcome_date) AS
+SELECT tbl_report.id, tbl_report.publicID, tbl_categories.id, tbl_categories.title, tbl_update.progress, tbl_report.created_at, tbl_report.expected_outcome_date
 
 FROM tbl_report
 LEFT JOIN tbl_update
